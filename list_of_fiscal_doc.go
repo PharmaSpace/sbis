@@ -22,7 +22,7 @@ func NewListOfFiscalDoc(client *Client) *ListOfFiscalDoc {
 	return &ListOfFiscalDoc{client: client}
 }
 
-func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom string) ([]*ListOfFiscalDocResponse, error) {
+func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom, dateTo string) ([]*ListOfFiscalDocResponse, error) {
 	var ar []*ListOfFiscalDocResponse
 
 	// ofd/v1/orgs/<inn>/kkts/<regId>/storages/<storageId>/docs?dateFrom=<dateFrom>&dateTo=<dateTo>&shiftNumber=<shiftNumber>&startId=<startId>&limit=<limit>
@@ -31,7 +31,7 @@ func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom string) ([
 		return nil, ErrEmptyREQ
 	}
 
-	path := fmt.Sprintf("ofd/v1/orgs/%s/kkts/%s/storages/%s/docs?dateFrom=%s", c.client.inn, regId, storages, dateFrom)
+	path := fmt.Sprintf("ofd/v1/orgs/%s/kkts/%s/storages/%s/docs?dateFrom=%s&dateTo=%s", c.client.inn, regId, storages, dateFrom, dateTo)
 	req, err := c.client.NewRequest(true, "GET", path, nil)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,8 @@ func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom string) ([
 	if resp != nil {
 		data, err := ioutil.ReadAll(resp.Body)
 
-		c.client.logger.Info().Msgf(string(data))
+		v := string(data)
+		c.client.logger.Print(v)
 
 		if err != nil {
 			return nil, err

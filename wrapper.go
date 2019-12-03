@@ -7,9 +7,9 @@ import (
 func GetReceipts(inn string, dateFrom string) {
 
 	sbis, err := NewClient(Verbose(), SetInn(inn), SetAuthConfig(&AuthConfig{
-		AppClientID: "1025293145607151",
-		Login:       "PharmaSpace",
-		Password:    "vfTrYE86$",
+		AppClientID: "",
+		Login:       "",
+		Password:    "",
 	}))
 
 	if err != nil {

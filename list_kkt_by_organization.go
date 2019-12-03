@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+
+	"github.com/rs/zerolog/log"
 )
 
 type ListKKTbyOrganization struct {
@@ -11,11 +13,20 @@ type ListKKTbyOrganization struct {
 }
 
 type ListKKTResponse struct {
-	RegID     string `json:"regId"`
-	Model     string `json:"model"`
-	FactoryID string `json:"factoryId"`
-	Address   string `json:"address"`
-	Status    string `json:"status"`
+	RegID              string `json:"regId"`
+	Model              string `json:"model"`
+	FactoryID          string `json:"factoryId"`
+	FsNumber           string `json:"fsNumber"`
+	KktSalesPointSPPID int    `json:"kktSalesPointSPPId"`
+	FirstShiftDate     string `json:"firstShiftDate"`
+	Address            string `json:"address"`
+	KktSalesPoint      string `json:"kktSalesPoint"`
+	Status             int    `json:"status"`
+	Kpp                string `json:"kpp"`
+	OrganizationName   string `json:"organizationName"`
+	FsFinishDate       string `json:"fsFinishDate"`
+	LicenseStartDate   string `json:"licenseStartDate"`
+	LicenseFinishDate  string `json:"licenseFinishDate"`
 }
 
 type OrgType int
@@ -51,6 +62,7 @@ func (c *ListKKTbyOrganization) Get(orgType *OrgType) ([]*ListKKTResponse, error
 	resp, err := c.client.client.Do(req)
 	if resp != nil {
 		data, err := ioutil.ReadAll(resp.Body)
+
 		if err != nil {
 			return nil, err
 		}

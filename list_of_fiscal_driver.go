@@ -13,9 +13,9 @@ type ListOfFiscalDriver struct {
 type ListOfFiscalDriverResponse struct {
 	StorageID     string `json:"storageId"`
 	Model         string `json:"model"`
-	Status        int    `json:"status"`
+	Status        string `json:"status"`
 	EffectiveFrom string `json:"effectiveFrom"`
-	EffectiveTo   string `json:"effectiveTo"`
+	FsFinishDate  string `json:"fsFinishDate"`
 }
 
 func NewListOfFiscalDriver(client *Client) *ListOfFiscalDriver {

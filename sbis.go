@@ -77,6 +77,8 @@ func NewClient(options ...Option) (*Client, error) {
 	// services
 	c.Authorization = NewAuthorization(c)
 	c.ListKKTbyOrganization = NewListKKTbyOrganization(c)
+	c.ListOfFiscalDriver = NewListOfFiscalDriver(c)
+	c.ListOfFiscalDoc = NewListOfFiscalDoc(c)
 
 	return c, nil
 }
