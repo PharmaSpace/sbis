@@ -36,7 +36,7 @@ func (c *ListKKTbyOrganization) Get(orgType *OrgType) ([]*ListKKTResponse, error
 	var ar []*ListKKTResponse
 
 	if len(c.client.inn) == 0 {
-		return nil, ErrEmptyINN
+		return nil, ErrEmptyREQ
 	}
 
 	path := fmt.Sprintf("ofd/v1/orgs/%s/kkts", c.client.inn)
