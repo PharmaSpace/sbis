@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-
-	"github.com/rs/zerolog/log"
 )
 
 type ListKKTbyOrganization struct {

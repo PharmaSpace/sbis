@@ -4,13 +4,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func GetReceipts(inn string, dateFrom string) {
+func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*ListOfFiscalDocResponse, error) {
+	var response []*ListOfFiscalDocResponse
 
-	sbis, err := NewClient(Verbose(), SetInn(inn), SetAuthConfig(&AuthConfig{
-		AppClientID: "",
-		Login:       "",
-		Password:    "",
-	}))
+	sbis, err := NewClient(Verbose(), SetInn(inn))
 
 	if err != nil {
 		log.Fatal().Msgf(err.Error())
@@ -20,7 +17,7 @@ func GetReceipts(inn string, dateFrom string) {
 		// Список ККТ по организации
 		list, err := sbis.ListKKTbyOrganization.Get(nil)
 		if err != nil {
-			log.Fatal().Msgf(err.Error())
+			return nil, err
 		}
 		if len(list) > 0 {
 			for _, regValue := range list {
@@ -28,22 +25,23 @@ func GetReceipts(inn string, dateFrom string) {
 				// Список фискальных накопителей по ККТ
 				list, err := sbis.ListOfFiscalDriver.Get(regValue.RegID, nil)
 				if err != nil {
-					log.Fatal().Msgf(err.Error())
+					return nil, err
 				}
 				if len(list) > 0 {
 					for _, value := range list {
 
 						// Список фискальных документов по фискальному накопителю
-						list, err := sbis.ListOfFiscalDoc.Get(value.StorageID, regValue.RegID, dateFrom)
+						list, err := sbis.ListOfFiscalDoc.Get(value.StorageID, regValue.RegID, dateFrom, dateTo)
 						if err != nil {
-							log.Fatal().Msgf(err.Error())
+							return nil, err
 						}
 
-						log.Print(list)
-
+						response = list
 					}
 				}
 			}
 		}
 	}
+
+	return response, nil
 }

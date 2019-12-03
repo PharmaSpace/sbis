@@ -11,11 +11,41 @@ type ListOfFiscalDoc struct {
 }
 
 type ListOfFiscalDocResponse struct {
-	StorageID     string `json:"storageId"`
-	Model         string `json:"model"`
-	Status        int    `json:"status"`
-	EffectiveFrom string `json:"effectiveFrom"`
-	EffectiveTo   string `json:"effectiveTo"`
+	Receipt struct {
+		ReceiptCode          int    `json:"receiptCode"`
+		RawData              string `json:"rawData"`
+		ReceiveDateTime      string `json:"receiveDateTime"`
+		SendDateTime         string `json:"sendDateTime"`
+		DateTime             int    `json:"dateTime"`
+		UserInn              string `json:"userInn"`
+		TotalSum             int    `json:"totalSum"`
+		Operator             string `json:"operator"`
+		CashTotalSum         int    `json:"cashTotalSum"`
+		KktRegID             string `json:"kktRegId"`
+		ShiftNumber          int    `json:"shiftNumber"`
+		FiscalDocumentNumber int    `json:"fiscalDocumentNumber"`
+		FiscalDriveNumber    string `json:"fiscalDriveNumber"`
+		RequestNumber        int    `json:"requestNumber"`
+		OperationType        int    `json:"operationType"`
+		TaxationType         int    `json:"taxationType"`
+		Items                []struct {
+			Quantity    int    `json:"quantity"`
+			Name        string `json:"name"`
+			Sum         int    `json:"sum"`
+			Price       int    `json:"price"`
+			Nds         int    `json:"nds"`
+			NdsSum      int    `json:"ndsSum"`
+			ProductType int    `json:"productType"`
+			PaymentType int    `json:"paymentType"`
+		} `json:"items"`
+		FiscalSign              int64 `json:"fiscalSign"`
+		EcashTotalSum           int   `json:"ecashTotalSum"`
+		NdsNo                   int   `json:"ndsNo"`
+		FiscalDocumentFormatVer int   `json:"fiscalDocumentFormatVer"`
+		PrepaidSum              int   `json:"prepaidSum"`
+		CreditSum               int   `json:"creditSum"`
+		ProvisionSum            int   `json:"provisionSum"`
+	} `json:"receipt"`
 }
 
 func NewListOfFiscalDoc(client *Client) *ListOfFiscalDoc {
@@ -40,9 +70,6 @@ func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom, dateTo st
 	resp, err := c.client.client.Do(req)
 	if resp != nil {
 		data, err := ioutil.ReadAll(resp.Body)
-
-		v := string(data)
-		c.client.logger.Print(v)
 
 		if err != nil {
 			return nil, err
