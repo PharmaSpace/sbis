@@ -29,14 +29,14 @@ type ListOfFiscalDocResponse struct {
 		OperationType        int    `json:"operationType"`
 		TaxationType         int    `json:"taxationType"`
 		Items                []struct {
-			Quantity    int    `json:"quantity"`
-			Name        string `json:"name"`
-			Sum         int    `json:"sum"`
-			Price       int    `json:"price"`
-			Nds         int    `json:"nds"`
-			NdsSum      int    `json:"ndsSum"`
-			ProductType int    `json:"productType"`
-			PaymentType int    `json:"paymentType"`
+			Quantity    float64 `json:"quantity"`
+			Name        string  `json:"name"`
+			Sum         int     `json:"sum"`
+			Price       int     `json:"price"`
+			Nds         int     `json:"nds"`
+			NdsSum      int     `json:"ndsSum"`
+			ProductType int     `json:"productType"`
+			PaymentType int     `json:"paymentType"`
 		} `json:"items"`
 		FiscalSign              int64 `json:"fiscalSign"`
 		EcashTotalSum           int   `json:"ecashTotalSum"`
