@@ -35,6 +35,8 @@ type Client struct {
 
 	Authorization         *Authorization
 	ListKKTbyOrganization *ListKKTbyOrganization
+	ListOfFiscalDriver    *ListOfFiscalDriver
+	ListOfFiscalDoc       *ListOfFiscalDoc
 }
 
 func NewClient(options ...Option) (*Client, error) {
