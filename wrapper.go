@@ -7,7 +7,8 @@ import (
 func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*ListOfFiscalDocResponse, error) {
 	var response []*ListOfFiscalDocResponse
 
-	sbis, err := NewClient(Verbose(), SetInn(inn))
+	options = append(options, SetInn(inn))
+	sbis, err := NewClient(options...)
 
 	if err != nil {
 		log.Fatal().Msgf(err.Error())
