@@ -37,7 +37,10 @@ func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*Lis
 							return nil, err
 						}
 
-						response = list
+						for _, rec := range list {
+							response = append(response, rec)
+						}
+
 					}
 				}
 			}
