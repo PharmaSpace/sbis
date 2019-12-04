@@ -4,8 +4,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*ListOfFiscalDocResponse, error) {
-	var response []*ListOfFiscalDocResponse
+func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*Receipt, error) {
+	var response []*Receipt
 
 	options = append(options, SetInn(inn))
 	sbis, err := NewClient(options...)
@@ -38,7 +38,7 @@ func GetReceipts(inn string, dateFrom, dateTo string, options ...Option) ([]*Lis
 						}
 
 						for _, rec := range list {
-							response = append(response, rec)
+							response = append(response, &rec.Receipt)
 						}
 
 					}

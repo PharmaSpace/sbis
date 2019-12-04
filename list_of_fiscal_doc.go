@@ -10,42 +10,46 @@ type ListOfFiscalDoc struct {
 	client *Client
 }
 
+type Item struct {
+	Quantity    float64 `json:"quantity"`
+	Name        string  `json:"name"`
+	Sum         int     `json:"sum"`
+	Price       int     `json:"price"`
+	Nds         int     `json:"nds"`
+	NdsSum      int     `json:"ndsSum"`
+	ProductType int     `json:"productType"`
+	PaymentType int     `json:"paymentType"`
+}
+
+type Receipt struct {
+	ReceiptCode             int     `json:"receiptCode"`
+	RawData                 string  `json:"rawData"`
+	ReceiveDateTime         string  `json:"receiveDateTime"`
+	SendDateTime            string  `json:"sendDateTime"`
+	DateTime                int     `json:"dateTime"`
+	UserInn                 string  `json:"userInn"`
+	TotalSum                int     `json:"totalSum"`
+	Operator                string  `json:"operator"`
+	CashTotalSum            int     `json:"cashTotalSum"`
+	KktRegID                string  `json:"kktRegId"`
+	ShiftNumber             int     `json:"shiftNumber"`
+	FiscalDocumentNumber    int     `json:"fiscalDocumentNumber"`
+	FiscalDriveNumber       string  `json:"fiscalDriveNumber"`
+	RequestNumber           int     `json:"requestNumber"`
+	OperationType           int     `json:"operationType"`
+	TaxationType            int     `json:"taxationType"`
+	Items                   []*Item `json:"items"`
+	FiscalSign              int64   `json:"fiscalSign"`
+	EcashTotalSum           int     `json:"ecashTotalSum"`
+	NdsNo                   int     `json:"ndsNo"`
+	FiscalDocumentFormatVer int     `json:"fiscalDocumentFormatVer"`
+	PrepaidSum              int     `json:"prepaidSum"`
+	CreditSum               int     `json:"creditSum"`
+	ProvisionSum            int     `json:"provisionSum"`
+}
+
 type ListOfFiscalDocResponse struct {
-	Receipt struct {
-		ReceiptCode          int    `json:"receiptCode"`
-		RawData              string `json:"rawData"`
-		ReceiveDateTime      string `json:"receiveDateTime"`
-		SendDateTime         string `json:"sendDateTime"`
-		DateTime             int    `json:"dateTime"`
-		UserInn              string `json:"userInn"`
-		TotalSum             int    `json:"totalSum"`
-		Operator             string `json:"operator"`
-		CashTotalSum         int    `json:"cashTotalSum"`
-		KktRegID             string `json:"kktRegId"`
-		ShiftNumber          int    `json:"shiftNumber"`
-		FiscalDocumentNumber int    `json:"fiscalDocumentNumber"`
-		FiscalDriveNumber    string `json:"fiscalDriveNumber"`
-		RequestNumber        int    `json:"requestNumber"`
-		OperationType        int    `json:"operationType"`
-		TaxationType         int    `json:"taxationType"`
-		Items                []struct {
-			Quantity    float64 `json:"quantity"`
-			Name        string  `json:"name"`
-			Sum         int     `json:"sum"`
-			Price       int     `json:"price"`
-			Nds         int     `json:"nds"`
-			NdsSum      int     `json:"ndsSum"`
-			ProductType int     `json:"productType"`
-			PaymentType int     `json:"paymentType"`
-		} `json:"items"`
-		FiscalSign              int64 `json:"fiscalSign"`
-		EcashTotalSum           int   `json:"ecashTotalSum"`
-		NdsNo                   int   `json:"ndsNo"`
-		FiscalDocumentFormatVer int   `json:"fiscalDocumentFormatVer"`
-		PrepaidSum              int   `json:"prepaidSum"`
-		CreditSum               int   `json:"creditSum"`
-		ProvisionSum            int   `json:"provisionSum"`
-	} `json:"receipt"`
+	Receipt Receipt `json:"receipt"`
 }
 
 func NewListOfFiscalDoc(client *Client) *ListOfFiscalDoc {
