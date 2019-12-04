@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
+	"time"
 )
 
 type ListOfFiscalDoc struct {
@@ -46,6 +48,7 @@ type Receipt struct {
 	PrepaidSum              int     `json:"prepaidSum"`
 	CreditSum               int     `json:"creditSum"`
 	ProvisionSum            int     `json:"provisionSum"`
+	Url                     string  `json:"url"`
 }
 
 type ListOfFiscalDocResponse struct {
@@ -54,6 +57,11 @@ type ListOfFiscalDocResponse struct {
 
 func NewListOfFiscalDoc(client *Client) *ListOfFiscalDoc {
 	return &ListOfFiscalDoc{client: client}
+}
+
+func (r *Receipt) GetUrl() {
+	tm := time.Unix(int64(r.DateTime), 0)
+	r.Url = "https://ofd.sbis.ru/rec/" + r.KktRegID + "/" + tm.Format("020106") + "/" + strconv.Itoa(int(r.FiscalSign))
 }
 
 func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom, dateTo string) ([]*ListOfFiscalDocResponse, error) {
@@ -81,6 +89,9 @@ func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom, dateTo st
 		err = json.Unmarshal(data, &ar)
 		if err != nil {
 			return nil, err
+		}
+		for _, item := range ar {
+			item.Receipt.GetUrl()
 		}
 	}
 
