@@ -1,4 +1,4 @@
-module github.com/cjp2600/sbis
+module github.com/PharmaSpace/sbis
 
 go 1.13
 
