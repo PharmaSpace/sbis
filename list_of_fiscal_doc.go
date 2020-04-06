@@ -73,7 +73,7 @@ func (c *ListOfFiscalDoc) Get(storages string, regId string, dateFrom, dateTo st
 		return nil, ErrEmptyREQ
 	}
 
-	path := fmt.Sprintf("ofd/v1/orgs/%s/kkts/%s/storages/%s/docs?dateFrom=%s&dateTo=%s&limit=500", c.client.inn, regId, storages, dateFrom, dateTo)
+	path := fmt.Sprintf("ofd/v1/orgs/%s/kkts/%s/storages/%s/docs?dateFrom=%s&dateTo=%s&limit=1000", c.client.inn, regId, storages, dateFrom, dateTo)
 	req, err := c.client.NewRequest(true, "GET", path, nil)
 	if err != nil {
 		return nil, err
